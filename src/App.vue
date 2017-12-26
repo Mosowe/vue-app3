@@ -9,6 +9,7 @@
   import vfooter from './components/footer/footer.vue';
 
 export default {
+  created () {},
   components: {
     vfooter
   },

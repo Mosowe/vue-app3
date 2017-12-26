@@ -13,6 +13,7 @@ const app = express();
 const appData = require("../data.json");
 const newsClass = appData.newsClass;
 const news = appData.news;
+const newsAdd = appData.newsAdd;
 const user = appData.user;
 const apiRouter = express.Router();
 app.use('/api',apiRouter);
@@ -63,6 +64,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         res.json({
           errno:0,
           data:user
+        })
+      })
+      app.get('/api/newsAdd',(req,res) => {
+        res.json({
+          errno:0,
+          data:newsAdd
         })
       })
     }

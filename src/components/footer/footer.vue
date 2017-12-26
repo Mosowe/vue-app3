@@ -14,8 +14,8 @@
 
 <style lang="less">
   @import "../../common/css.less/funLess";
-  footer{overflow: hidden;; width: 100%; display: flex; position: fixed;; left: 0; bottom: 0; padding: 0.4rem 0;.bgc(); text-align: center; z-index: 999;
-    a{ flex: 1; font-size: 0.6rem; color: #666; text-decoration: none;
+  footer{overflow: hidden;; width: 100%; display: flex; position: fixed; left: 0; bottom: 0; height: 3rem; text-align: center; z-index: 99;
+    a{ flex: 1; font-size: 0.6rem; color: #666; padding-top: 0.5rem;
       &.active{ color: red}
     }
     .ion{ display: block; font-size: 1rem; margin-bottom: 0.1rem}
