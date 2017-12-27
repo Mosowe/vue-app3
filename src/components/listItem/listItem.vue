@@ -1,7 +1,8 @@
 <template>
+  <div>
     <div id="list-wrapper" ref="wrapper">
       <div>
-        <div class="listItem" v-for="item in showlist">
+        <div class="listItem" v-for="item in showlist" @click="detail(item)">
         <div class="list1" v-if="item.images.length===1">
           <div class="img"><img :src="item.images[0]"></div>
           <div class="content">
@@ -23,14 +24,21 @@
       </div>
       </div>
     </div>
+    <news-detail :detail="Ndetail" ref="detailShow"></news-detail>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import newsDetail from '../newsDetail/newsDetail.vue';
   import BScroll from 'better-scroll';
     export default {
+      components: {
+        newsDetail
+      },
       data () {
         return {
-          information: []
+          information: [],
+          Ndetail: {}
         };
       },
       props: {
@@ -109,13 +117,17 @@
               }
             });
           });
+        },
+        detail (item) {
+          this.Ndetail = item;
+          this.$refs.detailShow.show();
         }
       }
     };
 </script>
 
 <style lang="less">
-#list-wrapper{ overflow: hidden; width: 100%;  position: fixed; left: 0; top: 2rem; bottom: 3rem;
+#list-wrapper{ overflow: hidden; width: 100%;  position: fixed; left: 0; top: 2rem; bottom: 3rem; z-index: 100;
   .listItem{ overflow: hidden; width: 96%; padding:0.5rem 2%; border-bottom: 1px solid rgba(0,0,0,0.1);
     .title{ font-size: 1rem; color: #333; line-height: 1.5rem; overflow: hidden; margin-bottom: 0.5rem}
     .info{ overflow: hidden; width: 100%; font-size: 0.5rem; color: rgba(0,0,0,0.5);}

@@ -107,7 +107,7 @@
 
 <style lang="less">
   #news{ overflow: hidden; width: 100%; position: relative;
-    .top{  width: 100%; height: 2rem; background-color: #f33; position: relative;
+    .top{  width: 100%; height: 2rem; background-color: #f33; position: relative; z-index: 101;
       .menu-wrapper{ overflow: hidden; height: 2rem; position: relative;}
       .newsMenu{ padding-right: 2rem;
         .menuItem{ float: left; line-height: 2rem; width: 65px; text-align: center; font-size: 0.8rem; color: #fff;
