@@ -2,7 +2,8 @@
   <div>
     <div id="list-wrapper" ref="wrapper">
       <div>
-        <div class="listItem" v-for="item in showlist" @click="detail(item)">
+        <div class="notData" v-if="showlist.length === 0">没有数据</div>
+        <div class="listItem" v-else v-for="item in showlist" @click="detail(item)">
         <div class="list1" v-if="item.images.length===1">
           <div class="img"><img :src="item.images[0]"></div>
           <div class="content">
@@ -31,99 +32,91 @@
 <script type="text/ecmascript-6">
   import newsDetail from '../newsDetail/newsDetail.vue';
   import BScroll from 'better-scroll';
-    export default {
+  import dataBridge from '../../common/js/dataBridge';
+
+  export default {
       components: {
         newsDetail
       },
       data () {
         return {
           information: [],
-          Ndetail: {}
+          Ndetail: {},
+          getData: {},
+          selfType: {
+            type: String,
+            default: 'ALL'
+          }
         };
       },
       props: {
-        info: {
-          type: String
-        }
+        dataType: {
+          type: String,
+          default: 'ALL'
+        },
+        dataList: {}
       },
       created () {
+        this.selfType = this.dataType;
+        const This = this;
+        dataBridge.$on('changeType', (id) => {
+          This.selfType = id;
+        });
         this.loadData();
-//        this.$axios.get('/api/news').then((res) => {
-//          res = res.data;
-//          if (res.errno === 0) {
-//            this.information = res.data;
-//          }
-//        });
       },
       computed: {
         showlist () {
           let list = [];
-          if (this.info === 'ALL') {
-//            list = this.information;
-            this.information.forEach((item) => { // 置顶
-              if (item.type === 1) {
-                list.push(item);
-              }
-            });
-            this.information.forEach((item) => { // 其他
-              if (item.type !== 1) {
-                list.push(item);
-              }
-            });
-          } else {
-          this.information.forEach((item) => {
-            if (item.classes === this.info) {
-              list.push(item);
+          if (this.dataList.length > 0) {
+            if (this.selfType === 'ALL') {
+              this.dataList.forEach((item) => { // 置顶
+                if (item.type === 1) {
+                  list.push(item);
+                }
+              });
+              this.dataList.forEach((item) => { // 其他
+                if (item.type !== 1) {
+                  list.push(item);
+                }
+              });
+            } else {
+              this.dataList.forEach((item) => {
+                if (item.classes === this.selfType) {
+                  list.push(item);
+                }
+              });
             }
-          });
           }
           return list;
         }
       },
       methods: {
-        loadData () {
-          this.$axios.get('/api/news').then((res) => {
-            res = res.data;
-            if (res.errno === 0) {
-              this.information = res.data;
-            }
-            this.$nextTick(() => {
-              if (!this.scroll) {
-                this.scroll = new BScroll(this.$refs.wrapper, {
-                  click: true
-                });
-                this.scroll.on('touchEnd', (pos) => {
-                  // 下拉动作
-                  if (pos.y > 50) {
-                    console.log('下拉刷新');
-                    this.loadData();
-                  }
-//                   上拉加载
-                  if (pos.y <= (this.scroll.maxScrollY + 100)) {
-                    console.log('上拉加载');
-//                    this.$axios.get('/api/newsAdd').then((res) => {
-//                      res = res.data;
-//                      if (res.errno === 0) {
-//                        res.data.forEach((item) => {
-//                          this.information.push(item);
-//                        });
-//                      }
-//                    });
-//                    console.log(this.information);
-                  }
-                });
-              } else {
-                this.scroll.refresh();
-              }
-            });
-          });
-        },
         detail (item) {
           this.Ndetail = item;
           this.$refs.detailShow.show();
+        },
+        loadData () {
+          this.$nextTick(() => {
+          if (!this.scroll) {
+            this.scroll = new BScroll(this.$refs.wrapper, {
+              click: true
+            });
+            this.scroll.on('touchEnd', (pos) => {
+              if (pos.y > 50) {
+                console.log('下拉刷新');
+                this.loadData();
+              }
+              if (pos.y <= (this.scroll.maxScrollY + 100)) {
+                console.log('上拉加载');
+              }
+            });
+          } else {
+            this.scroll.refresh();
+          }
+      });
         }
       }
-    };
+  };
 </script>
 
 <style lang="less">
@@ -145,5 +138,6 @@
     }
 
   }
+  .notData{ overflow: hidden; position: absolute; left: 0; top: 0; bottom: 0; width: 100%; height: 50px; text-align: center; line-height: 50px;}
 }
 </style>
