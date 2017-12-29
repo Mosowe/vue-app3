@@ -1,30 +1,56 @@
 <template>
   <div class="writeRate"  >
-    <label class="writebox" @focus="inputfocus">
+    <label class="writebox" @click="inputfocus">
       <i class="ion ion-ios-compose-outline"></i>
-      <input type="text" placeholder="写跟帖"/>
+      <input type="text" placeholder="写跟帖" id="inputText"/>
     </label>
     <div class="smaill rt"><i class="ion ion-happy-outline"></i></div>
-    <div class="rate" v-if="showc"><i class="ion ion-chatbox-working"></i><em>{{number}}</em></div>
-    <div class="take rt" v-if="showc"><i class="ion ion-android-star-outline"></i></div>
-    <div class="share rt" v-if="showc"><i class="ion ion-android-share-alt"></i></div>
+    <div class="rate" v-if="showw"><i class="ion ion-chatbox-working"></i><em>{{data.length}}</em></div>
+    <div class="take rt" v-if="showw"><i class="ion ion-android-star-outline"></i></div>
+    <div class="share rt" v-if="showw"><i class="ion ion-android-share-alt"></i></div>
+    <button class="btn" type="submit" v-if="!showw" @click="inputblur">发送</button>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   export default {
+    data () {
+      return {
+        showw: true
+      };
+    },
     props: {
-      number: {
-        type: Number
-      },
+      data: null,
       showc: {
         type: Boolean,
         default: false
       }
     },
+    created () {
+      this.showw = this.showc;
+    },
     methods: {
       inputfocus () {
-        alert(0);
+        this.showw = false;
+      },
+      inputblur () {
+        let data = new Date;
+        let text = document.getElementById('inputText').value;
+        let user = {
+          'username': 'sewlf',
+          'rateTime': data.toLocaleDateString(),
+          'rateType': 0,
+          'text': '',
+          'avatar': 'http://static.galileo.xiaojukeji.com/static/tms/default_header.png'
+        };
+        if (text !== '') {
+          user.text = text;
+          console.log(user);
+          this.showw = true;
+        } else {
+          this.showw = true;
+        }
+//        this.showc = true;
       }
     }
   };
@@ -43,5 +69,6 @@
       em{ color: #f33; font-size: 0.5rem; margin-left: 5px;}
       i{ vertical-align: middle}
     }
+    .btn{ background-color: #6db6f5;  border: none; border-radius: 3px; color: #fff; flex: 0 0 50px; outline: none}
   }
 </style>

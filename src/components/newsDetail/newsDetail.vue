@@ -1,7 +1,7 @@
 <template>
   <transition name="newsDetail">
     <div id="newsDetail-wrapper" v-show="openPage">
-      <topwrapper :number="detail.ratings.length"></topwrapper>
+      <topwrapper :number="detail.ratings.length" :selectMenu="selectMenu"></topwrapper>
       <div class="newsDetail" ref="newsD">
         <div class="newsBox">
           <h2>{{detail.title}}</h2>
@@ -23,7 +23,7 @@
           <div class="likes"><i class="ion ion-heart"></i>&nbsp;&nbsp;{{detail.textLike}}人喜欢</div>
         </div>
       </div>
-      <input-box :number="detail.ratings.length" :showc="true"></input-box>
+      <input-box :data="detail.ratings" :showc="true"></input-box>
       <ratings :ratings="detail.ratings" ref="ratings"></ratings>
     </div>
   </transition>
@@ -48,7 +48,25 @@
      data () {
         return {
           xgtj: {},
-          openPage: false
+          openPage: false,
+          selectMenu: [
+            {
+              icon: 'ion-android-star-outline',
+              text: '收藏'
+            },
+            {
+              icon: 'ion-document',
+              text: '正文字号'
+            },
+            {
+              icon: 'ion-android-share-alt',
+              text: '分享'
+            },
+            {
+              icon: 'ion-ios-moon-outline',
+              text: '夜间模式'
+            }
+          ]
         };
       },
      created () {
