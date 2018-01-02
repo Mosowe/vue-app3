@@ -2,7 +2,7 @@
   <div class="writeRate"  >
     <label class="writebox" @click="inputfocus">
       <i class="ion ion-ios-compose-outline"></i>
-      <input type="text" placeholder="写跟帖" id="inputText"/>
+      <input type="text" placeholder="写跟帖" class="inputText"/>
     </label>
     <div class="smaill rt"><i class="ion ion-happy-outline"></i></div>
     <div class="rate" v-if="showw"><i class="ion ion-chatbox-working"></i><em>{{data.length}}</em></div>
@@ -34,10 +34,10 @@
         this.showw = false;
       },
       inputblur () {
-        let data = new Date;
-        let text = document.getElementById('inputText').value;
+        let data = new Date();
+        let text = document.getElementsByClassName('writeRate')[document.getElementsByClassName('writeRate').length - 1].getElementsByClassName('inputText')[0].value;
         let user = {
-          'username': 'sewlf',
+          'username': 'self',
           'rateTime': data.toLocaleDateString(),
           'rateType': 0,
           'text': '',
@@ -45,7 +45,7 @@
         };
         if (text !== '') {
           user.text = text;
-          console.log(user);
+          this.data.unshift(user);
           this.showw = true;
         } else {
           this.showw = true;

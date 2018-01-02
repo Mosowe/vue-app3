@@ -5,7 +5,7 @@
       <div class="content" ref="contents">
         <ratings :ratings="ratings"></ratings>
       </div>
-      <input-box></input-box>
+      <input-box :data="ratings" :showc="true"></input-box>
     </div>
   </transition>
 </template>

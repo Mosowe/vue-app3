@@ -16,6 +16,7 @@ const news = appData.news;
 const newsAdd = appData.newsAdd;
 const user = appData.user;
 const movie = appData.movie;
+const movieClass = appData.movieClass;
 const zhibo = appData.zhibo;
 const apiRouter = express.Router();
 app.use('/api',apiRouter);
@@ -78,6 +79,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         res.json({
           errno:0,
           data:movie
+        })
+      })
+      app.get('/api/movieClass',(req,res) => {
+        res.json({
+          errno:0,
+          data:movieClass
         })
       })
       app.get('/api/zhibo',(req,res) => {

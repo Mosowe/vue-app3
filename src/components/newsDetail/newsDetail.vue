@@ -47,7 +47,6 @@
       },
      data () {
         return {
-          xgtj: {},
           openPage: false,
           selectMenu: [
             {
@@ -69,17 +68,6 @@
           ]
         };
       },
-     created () {
-//       dataBridge.$on('close', (data) => {
-//         this.openPage = data;
-//       });
-       this.$axios.get('/api/newsAdd').then((res) => {
-         res = res.data;
-         if (res.errno === 0) {
-           this.xgtj = res.data;
-         }
-       });
-     },
       methods: {
         show () {
           this.openPage = true;
